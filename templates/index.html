@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% block head%}
+{%endblock%}
+
+{%block body%}
+
+<div class="container">
+     <input class="ontology_search dropbtn" id="ontology_search_input_id" type="text" placeholder="search for Ontology..." onkeyup="ontology_search()">
+</div>
+<div class="container const" style="width: auto">
+
+    <table id="ontology_tabel">
+        <tr>
+            <th class="display-4" style="color: cornflowerblue">Nomisma Ontology</th>
+            <th class="display-4" style="color: cornflowerblue">Description</th>
+        </tr>
+        {% for n in name%}
+        <tr>
+            <td>
+               <form action="{{ url_for('add_name') }}" method="post">
+                   <input class="btn btn-outline-info" type="submit" value="{{n[1]}}" name="pressd"><a class="hidden_text" >{{n[1]}}</a>
+                   <input class="btn btn-outline-link" value="{{n[2]}}" name="pressd_non" style="width: 800px">
+                   <input class=" btn btn-outline-link " value="{{n[0]}}" name="pressd_id" style="visibility: hidden">
+
+               </form>
+            </td>
+        </tr>
+        <!--END FOR the n -->
+        {%endfor%}
+
+
+    </table>
+    </div>
+<div class="container" style="width: auto">
+    <br><br>
+    <table>
+        <tr>
+            <th class="display-4" style="color: cornflowerblue">ENTRIES</th>
+
+            <form action="{{url_for('about')}}" method="post">
+                   <a type="text">About <input type="text" placeholder="ex. Coin id ...." name="about"></a>
+                <button type="submit" class="btn btn-outline-info" style="width: 100px" name="about_button">set current ID</button>
+                &nbsp; &nbsp; &nbsp; &nbsp;<h3 >Current entry for <a class="text_about">{{about}}</a></h3>
+            </form>
+
+        </tr>
+        {% set counter = 0%}
+
+
+        {% for x in entrys %}
+        <tr>
+            <td>{{x[0]}}  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {{x[1]}} &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{{x[3]}}
+
+           <div class="dropdown">
+               <!--Current work -->
+               <form action="/add_id_byEnter/{{x[0]}}/{{x[2]}}" method="post">
+                   <!--input name will be replaced from counter to x[2] as id-->
+               <input type="text" name="counter{{x[2]}}" size="150" class="dropbtn" id="input{{x[2]}}" onkeyup="searchFunction('{{counter}}','{{x[2]}}')" onkeypress="enter_to_add()" placeholder="Search name...">
+               <button type="submit" class="btn btn-primary" name="force_pressd_to_add" value="add" style="visibility: hidden">Add</button>
+               </form>
+               <div class="dropdown-content" >
+                   <table id="{{x[2]}}">
+                        {% for id_s in id_list%}
+
+                       <tr>
+
+                 <td>
+                     <form action="{{ url_for('pass_id_link') }}" method="post">
+                         {% set list = [id_s[0],x[0]]%}
+                         <input type="submit" class="btn btn-outline-link" value="{{list}}" name="pressd_for_id"><a href="#" style="visibility: hidden"> {{id_s[0]}}</a></input>
+
+                     </form>
+
+
+                 </td>
+
+
+                       </tr>
+                       {%endfor%}
+                   </table>
+
+
+
+
+           </div>
+           </div> <hr class="divider"></td>{% set counter = counter + 1%}
+
+
+        </tr>
+
+        {%endfor%}
+    </table>
+<!--Div end location-->
+
+</div>
+{%endblock%}

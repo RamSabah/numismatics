@@ -1,0 +1,75 @@
+.content{
+    margin: auto;
+}
+
+.dropbtn {
+  background-color: white;
+  color: black;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+
+
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 3%;
+}
+.dropdown-content a:hover {background-color:whitesmoke;}
+
+.dropdown:hover .dropdown-content {display: block;}
+
+.dropdown:hover .dropbtn {background-color: whitesmoke;}
+
+
+.dropdown-content{
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    width: 100%;
+    z-index: 99 !important;
+    overflow-y: scroll;
+    height: 200px;
+}
+
+.text_about{
+    color: green;
+    font-family: "Times New Roman";
+
+}
+
+.const{
+    height: 400px;
+    overflow-y: scroll;
+
+
+
+}
+
+.container{
+    width: 150%;
+
+
+}
+
+.jumbotron{
+    width: 100%;
+    align-self: center;
+}
+
+.ontology_search{
+    width: 100%;
+    background-color: aliceblue;
+}
+
+.hidden_text{
+    visibility: hidden;
+}
+
+.footer{
+    height: 200px;
+    background-color: darkgray;
+
+}

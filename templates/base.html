@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style/style.css') }}">
+    <!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    {% block head %}{% endblock %}
+</head>
+<body>
+
+<div class="container container_edit">
+  <div class="jumbotron">
+    <h1 style="color: cornflowerblue">Nomisma RDF Generator</h1>
+    <p>Select the Nomismatic Object that pass your Coin. An RDF Document will be Produced after submitt the selection.</p>
+      <button class="btn btn-outline-info" ><a href="{{ url_for('add') }}"> Add new Object</a></button>
+      <button class="btn btn-outline-info"><a href="{{url_for('rdfReference')}}">Add RDF Reference </a> </button>
+      <button class="btn btn-outline-warning"><a href="{{url_for('add_id')}}"> Add new ID </a> </button>
+      <button class="btn btn-outline-warning"><a href="#">Create / Modify RDF</a> </button>
+      <button class="btn btn-outline-warning"><a href="#">Load RDF File</a> </button>
+      <button class="btn btn-outline-warning"><a href="#">File Report</a> </button>
+      <button class="btn btn-outline-danger"><a href="{{url_for('clear_selection')}}">Clear Selection</a></button>
+
+  </div>
+  <p>List of Numismatics Objects loaded from the Database</p>
+</div>
+
+<script>
+
+    function searchFunction(x,table_id) {
+        var input,filter,table,tr,th,td,i,textvalue;
+        input = document.getElementById('input'.concat(table_id));
+        filter = input.value.toLowerCase();
+        table = document.getElementById(table_id);
+        tr = table.getElementsByTagName("tr");
+        for(i = 0;i< tr.length;i++){
+            td = tr[i].getElementsByTagName("td")[0];
+            if(td){
+                textvalue = td.textContent || td.innerText;
+                if (textvalue.toLowerCase().indexOf(filter)> -1){
+                    tr[i].style.display = "";
+                    this.input_place_holder = tr[0]
+
+                }else{
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+
+
+    }
+function enter_to_add() {
+
+        document.addEventListener('keydown',(e) => {
+            if(e.code === 'Enter'){
+                input = document.getElementById('search_input').value;
+                $.post("add_id_byEnter",input,function (){});
+                return
+
+            }
+
+
+        })
+
+}
+
+    function ontology_search() {
+        var input,filter,table,tr,th,td,i,textvalue;
+        input = document.getElementById('ontology_search_input_id');
+        filter = input.value.toLowerCase();
+        table = document.getElementById('ontology_tabel');
+        tr = table.getElementsByTagName("tr");
+        for(i = 0;i< tr.length;i++){
+            td = tr[i].getElementsByTagName("td")[0];
+            if(td){
+                textvalue = td.textContent || td.innerText;
+                if (textvalue.toLowerCase().indexOf(filter)> -1){
+                    tr[i].style.display = "";
+                    this.input_place_holder = tr[0]
+
+                }else{
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+
+
+    }
+
+</script>
+
+    {% block body %}{% endblock %}
+
+<footer class="footer">
+  <!-- Copyright -->
+  <div class="footer" style="background-color: rgba(0, 0, 0, 0.2);">
+
+    <a> End of the Page</a>
+  </div>
+  <!-- Copyright -->
+</footer>
+</body>
+</html>
