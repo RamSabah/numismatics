@@ -6,6 +6,7 @@ from dict2xml import dict2xml
 
 # END of Import
 
+#class for RDF File Database access
 class db_connector:
     def get_connection(self):
         try:
@@ -16,7 +17,7 @@ class db_connector:
             else:print("No Connection!")
         except Error as e:
             print("Connection problem",e)
-
+#get all Entrys from the database Table (for Headder only)
     def get_header_info(self):
         connection = db_connector.get_connection(0)
         read_cursor = connection.cursor()
@@ -28,7 +29,7 @@ class db_connector:
             ontology_list.append(rows[0])
             rows = read_cursor.fetchone()
         return ontology_list
-
+#get all Entrys from the Database Table( for Body only)
     def get_body_info(self):
         connection = db_connector.get_connection(0)
         read_cursor = connection.cursor()
@@ -44,7 +45,7 @@ class db_connector:
         read_cursor = connection.cursor()
         read_cursor.execute(" SELECT * FROM about")
         return read_cursor.fetchone()
-
+#get the Reference of Ontology that use in the RDF File
     def get_references(self):
         try:
           list = []
@@ -68,11 +69,11 @@ class db_connector:
 
 
 
-
+#class for creating header by ontology
 class header_creator:
     def header_bilder(self):
         header = ""
-        header += "<?xml version="'1.0'"?>\n"
+        header += "<?xml version=" +'"'+ str(1.0) + '"'+ "?>\n"
         header += "<rdf:RDF \n"
         header += "    xmlns:rdf='""http://www.w3.org/1999/02/22-rdf-syntax-ns'" + "\n"
         header += ""
@@ -91,14 +92,14 @@ class header_creator:
         header += ">" + "\n"
         print(header)
         return header
-
+#check if the entry have his ontology
     def if_ontology_exist(ontology):
        ontology_list =  db_connector.get_header_info(0)
        for i in ontology_list:
            if (i.find(str(ontology))) == 0:
                return True
        return False
-
+#create the file directory(for headder only)
     def hedder(self):
         file = open("xmlFile.xml","w+")
         file.write(header_creator.header_bilder(0))
@@ -106,13 +107,15 @@ class header_creator:
 
 
 
+#class for creating the rest of the file
 class body:
     def body_writer(self):
         file = open("xmlFile.xml","a")
         file.write(body.body_bilder(0))
+        file.write(body.body_close(0))
         file.close()
 
-
+#method create the givin entry
     def body_bilder(self):
         forbidden_list = []
         body = ""
@@ -127,22 +130,26 @@ class body:
                     else:
                       print("ok, item in forbidden_list")
         body +="  </rdf:Description>" + "\n"
-        body +="\n \n \n"
-        body +="</rdf:RDF>" + "\n"
-
-
-
-
-
-
-        print(entrys)
-        print(references)
-        print(body)
+        body +="\n"
         return body
 
+#for closing the file (not Finished!)
+    def body_close(self):
+        body = "\n \n"
+        body ="</rdf:RDF>" + "\n"
+        return body
+# for rewrite the file (still open!)
+    def body_close_remove(self):
+        file = open("xmlFile.xml","r")
+        ready_file = file.read()[:-11]
+        return ready_file
 
 
 
-header_creator.hedder(0)
-body.body_writer(0)
-body.body_bilder(0)
+
+
+
+#header_creator.hedder(0)
+#body.body_writer(0)
+#body.body_bilder(0)
+body.body_close_remove(0)

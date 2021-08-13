@@ -9,7 +9,7 @@ import re
 from urllib.parse import urlparse
 from flask import Flask, render_template, request, url_for, redirect, jsonify
 
-
+#class for methods and
 class db_conn:
    def insert(name_,description_):
     try:
@@ -25,7 +25,7 @@ class db_conn:
 
     except Error as ar:
         print("Error accured", ar)
-
+#insert selected ontology in to entry
    def insert_as_selected(name,discription,id):
        try:
            connection = conn.connect(host='127.0.0.1', database='maria', user='root', password='admin')
@@ -42,7 +42,7 @@ class db_conn:
            print("Error accured", ar)
 
        return True
-
+#read ontology from database
    def read(self):
        connection = conn.connect(host='127.0.0.1', database='maria', user='root', password='admin')
        if connection.is_connected():
@@ -58,7 +58,7 @@ class db_conn:
            rows = read_cursor.fetchone()
 
        return dataSet
-
+#read selected entrys from database
    def read_entrys(self):
        connection = conn.connect(host='127.0.0.1', database='maria', user='root', password='admin')
        if connection.is_connected():
@@ -74,7 +74,7 @@ class db_conn:
            rows = read_cursor.fetchone()
 
        return dataSet
-
+#reset all entrys
    def clear_selection(self):
        connection = conn.connect(host='127.0.0.1', database='maria', user='root', password='admin')
        if connection.is_connected():
@@ -98,12 +98,13 @@ class db_conn:
            print("Error accured", ar)
 
        return True
-
+#optimize database connection
    def getConnection(self):
        connection = conn.connect(host='127.0.0.1', database='maria', user='root', password='admin')
        if connection.is_connected():
            print("connected")
            return connection
+#get list of id's from Database
    def get_id(self):
        try:
           connection = db_conn.getConnection(0)
@@ -117,7 +118,7 @@ class db_conn:
           return list
        except Error as e:
            print("Error accurd!",e)
-
+#insert id to the selected entry
    def insert_id_link(nomName,nomID):
        try:
            connection = db_conn.getConnection(0)
@@ -128,7 +129,7 @@ class db_conn:
            connection.commit()
        except Error as e:
            print("An error has been accurd",e)
-
+#set the id of the object
    def about(name_):
        try:
            connection = db_conn.getConnection(0)
@@ -140,7 +141,7 @@ class db_conn:
        except Error as e:
               print("Error accurd",e)
 
-
+#retrieve the id of the object from the Daatabase
    def get_about(self):
        try:
            connection = db_conn.getConnection(0)
@@ -150,7 +151,7 @@ class db_conn:
        except Error as e:
               print("Error accur while retrieving about", e)
        return about
-
+#add reference to the Database
    def insert_Reference(name,reference):
        connection = db_conn.getConnection(0)
        write_cursor = connection.cursor()
@@ -184,7 +185,7 @@ def index():
 
     return render_template('index.html',name=names,entrys=entrys,id_list = id_list,about = about)
 
-
+#add Object
 @app.route('/add',methods=['GET','POST'])
 def add():
      if request.method == 'POST':
@@ -228,7 +229,7 @@ def clear_selection():
         db_conn.clear_selection(0)
         print("Selection Cleard")
     return index()
-
+# ((Method must be Optimized))
 @app.route("/pass_id_link", methods=['POST','GET'])
 def pass_id_link():
     id = request.form['pressd_for_id']
