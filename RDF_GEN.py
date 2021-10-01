@@ -149,7 +149,7 @@ class body:
 
 
 
-#header_creator.hedder(0)
-#body.body_writer(0)
-#body.body_bilder(0)
-body.body_close_remove(0)
+header_creator.hedder(0)
+body.body_writer(0)
+body.body_bilder(0)
+#body.body_close_remove(0)

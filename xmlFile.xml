@@ -3,8 +3,8 @@
     xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns'
     xmlns:nmo='http://nomisma.org/ontology#'
 >
-  <rdf:Description rdf:about="#coin_45445">
-    <nmo:hasObjectType nmo:hasReverse="http://nomisma.org/id/karaues"/>
+  <rdf:Description rdf:about="#coin?66">
+    <nmo:hasDate xml:lang="http//infocenter?complete"/>
   </rdf:Description>
 
 </rdf:RDF>
